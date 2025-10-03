@@ -1,5 +1,5 @@
 def carica_da_file(file_path):
-    """Carica i libri dal file"""
+    """Carica i libri dal filess"""
     # TODO
 
 
