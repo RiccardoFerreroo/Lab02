@@ -1,5 +1,37 @@
 def carica_da_file(file_path):
     """Carica i libri dal filess"""
+    biblioteca={}
+    try:
+        with open(file_path,'r', encoding="utf-8") as f:
+            righe = []
+            for riga in f:
+                righe.append(riga.strip())
+            numero_sezioni = int(righe[0])
+            for i in range(1,numero_sezioni+1):
+                biblioteca[i]= [] #creo un dizionario con tante sezioni
+                                # quante dette nella prima riga del file
+
+
+            for riga in righe[1:]:
+                segmenti= []
+                for seg in riga.split(','):
+                    segmenti.append(seg.strip())
+                if len(riga)!= 5 :
+                    continue
+                else :
+                    titolo, autore, anno, pagine, sezione = segmenti
+                    libro = {"titolo": titolo,
+                             "autore": autore,
+                             "anno": int(anno),
+                             "pagine": int(pagine)}
+                    sezione = int( sezione)
+                    if sezione in biblioteca:
+                        biblioteca[sezione].append(libro)
+        return biblioteca
+    except FileNotFoundError:
+        return None
+
+
     # TODO
 
 
