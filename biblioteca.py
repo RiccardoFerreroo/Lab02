@@ -16,7 +16,7 @@ def carica_da_file(file_path):
                 segmenti= []
                 for seg in riga.split(','):
                     segmenti.append(seg.strip())
-                if len(riga)!= 5 :
+                if len(segmenti)!= 5 :
                     continue
                 else :
                     titolo, autore, anno, pagine, sezione = segmenti
@@ -32,27 +32,61 @@ def carica_da_file(file_path):
         return None
 
 
-    # TODO
-
 
 def aggiungi_libro(biblioteca, titolo, autore, anno, pagine, sezione, file_path):
     """Aggiunge un libro nella biblioteca"""
-    # TODO
+    if sezione not in biblioteca:
+        return None
+    for lista in biblioteca.values(): #scorre tutte liste libri
+                                    # senza preoccuparsi delle chiavi
+        for libro in lista: #scorre tutti i libri di ogni lista
+            if libro["titolo"].lower() == titolo.lower():
+                return None #libro[titolo] da libreria
+                            #titolo.lower = nuovo da aggiungere per vedere se c'è
+
+    nuovo_libro = {"titolo": titolo,
+                    "autore": autore,
+                    "anno": int(anno),
+                    "pagine": int(pagine)
+                   }#crea il nuovo libro
+        #aggiorna struttura dati dizionario
+    biblioteca[sezione].append(nuovo_libro)
+
+    try :
+
+        with open(file_path, "a", encoding="utf-8") as f:
+                                    # a sta per append ad un file, non sovrascrive come w di write
+             f.write(f"\n{titolo},{autore},{anno},{pagine},{sezione}")
+                                    # scritta nella stessa maniera degli altri dati nel file csv
+        return nuovo_libro
+    except FileExistsError:
+        return None
+
 
 
 def cerca_libro(biblioteca, titolo):
     """Cerca un libro nella biblioteca dato il titolo"""
+    for sezione, libri in biblioteca.items(): #avessi messo .values() non avrei potuto
+                                              # accedere alla sezione in quanto le chiavi
+                                              # sono ignorate
+        # .items() da una lista di tuple [(sezione,[libri])]
+        for libro in libri:
+            if libro["titolo"].lower() == titolo.lower():
+                return f"{libro['titolo']}, {libro['autore']}, {libro['anno']}, {libro['pagine']}, {sezione}"
     # TODO
 
 
 def elenco_libri_sezione_per_titolo(biblioteca, sezione):
     """Ordina i titoli di una data sezione della biblioteca in ordine alfabetico"""
+    if sezione not in biblioteca:
+        return None
+    return sorted([libro["titolo"] for libro in biblioteca[sezione]])
     # TODO
 
 
 def main():
-    biblioteca = []
-    file_path = "biblioteca.csv"
+    biblioteca = {}
+
 
     while True:
         print("\n--- MENU BIBLIOTECA ---")
@@ -129,4 +163,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
