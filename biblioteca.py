@@ -73,7 +73,7 @@ def cerca_libro(biblioteca, titolo):
         for libro in libri:
             if libro["titolo"].lower() == titolo.lower():
                 return f"{libro['titolo']}, {libro['autore']}, {libro['anno']}, {libro['pagine']}, {sezione}"
-    # TODO
+
 
 
 def elenco_libri_sezione_per_titolo(biblioteca, sezione):
@@ -81,7 +81,7 @@ def elenco_libri_sezione_per_titolo(biblioteca, sezione):
     if sezione not in biblioteca:
         return None
     return sorted([libro["titolo"] for libro in biblioteca[sezione]])
-    # TODO
+
 
 
 def main():
