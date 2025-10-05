@@ -74,8 +74,6 @@ def cerca_libro(biblioteca, titolo):
             if libro["titolo"].lower() == titolo.lower():
                 return f"{libro['titolo']}, {libro['autore']}, {libro['anno']}, {libro['pagine']}, {sezione}"
 
-
-
 def elenco_libri_sezione_per_titolo(biblioteca, sezione):
     """Ordina i titoli di una data sezione della biblioteca in ordine alfabetico"""
     if sezione not in biblioteca:
